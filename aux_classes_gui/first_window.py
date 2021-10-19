@@ -81,6 +81,7 @@ class Ui_JamboGui(object):
 "font: 9pt \"Arial\";\n"
 "border-radius: 4px;\n"
 "padding: 4px;")
+        self.inputSearch.setClearButtonEnabled(True)
 
         self.horizontalLayout.addWidget(self.inputSearch)
 
@@ -168,6 +169,7 @@ class Ui_JamboGui(object):
     def retranslateUi(self, JamboGui):
         JamboGui.setWindowTitle(QCoreApplication.translate("JamboGui", u"JamboGui", None))
         self.projectLoader.setText("")
+        self.inputSearch.setPlaceholderText(QCoreApplication.translate("JamboGui", u"Insira algum conte\u00fado", None))
         self.searchInputButton.setText(QCoreApplication.translate("JamboGui", u"Pesquisar", None))
         self.openSites.setText(QCoreApplication.translate("JamboGui", u"Sites", None))
         self.openMiniBrowser.setText(QCoreApplication.translate("JamboGui", u"Browser", None))

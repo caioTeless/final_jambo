@@ -24,6 +24,7 @@ class JamboResults(QWidget, Ui_formResult):
         self.textResults.setAlignment(Qt.AlignJustify)
 
         self. save_new_arquive()
+        self.operations()
 
     # Always get a new data
     def insert_data(self):
@@ -42,12 +43,11 @@ class JamboResults(QWidget, Ui_formResult):
         self.clearListButton.clicked.connect(self.textResults.clear)
 
 
+"""
 if __name__ == '__main__':
     app = QApplication([])
     ui = JamboResults()
     ui.operations()
     ui.show()
     sys.exit(app.exec_())
-
-
-
+"""
