@@ -6,6 +6,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
 
         MainWindow.setObjectName("MainWindow")
+        MainWindow.setWindowTitle('Jambo')
         MainWindow.resize(800, 600)
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")

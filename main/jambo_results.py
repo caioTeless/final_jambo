@@ -1,6 +1,7 @@
+import os
 import sys
 
-from PySide2.QtGui import QTextBlockFormat
+from PySide2.QtGui import QTextBlockFormat, QIcon
 from PySide2.QtWidgets import QWidget, QApplication
 from PySide2.QtCore import Qt
 from aux_classes_gui.list_result import Ui_formResult
@@ -13,21 +14,27 @@ class JamboResults(QWidget, Ui_formResult):
         super(JamboResults, self).__init__()
         self.setupUi(self)
 
+        # Window
+        self.setWindowIcon(QIcon(os.path.join(os.getcwd(), '../images/jb_icon')))
+        self.setWindowTitle('Resultados - Jambo')
+
         # Style Button
         self.backListButton.setStyleSheet(button_generic())
         self.saveListButton.setStyleSheet(button_generic())
         self.clearListButton.setStyleSheet(button_generic())
 
         # Methods
-        self.insert_data()
+        self.insert_data_display()
 
         self.textResults.setAlignment(Qt.AlignJustify)
 
-        self. save_new_arquive()
-        self.operations()
+        self.save_new_arquive()
+
+        # ACtions
+        self.clearListButton.clicked.connect(self.clear_results)
 
     # Always get a new data
-    def insert_data(self):
+    def insert_data_display(self):
         with open('teste.txt', 'r+') as arquive:
             self.textResults.setText(str(arquive.read().replace('\n', '')))
 
@@ -39,15 +46,16 @@ class JamboResults(QWidget, Ui_formResult):
     def save_new_arquive(self):
         self.saveListButton.clicked.connect(self.get_new_text)
 
-    def operations(self):
-        self.clearListButton.clicked.connect(self.textResults.clear)
+    def clear_results(self):
+        items = open('teste.txt', 'w+')
+        items.write('')
+        items.close()
+        self.textResults.clear()
 
 
-"""
 if __name__ == '__main__':
     app = QApplication([])
     ui = JamboResults()
-    ui.operations()
     ui.show()
     sys.exit(app.exec_())
-"""
+

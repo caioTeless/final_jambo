@@ -1,6 +1,7 @@
 import os.path
 import sys
 
+from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QWidget, QApplication
 from aux_classes_gui.history_browser import Ui_Form
 from helpers.helper_buttons import button_generic
@@ -11,6 +12,10 @@ class JamboBrowserHistory(QWidget, Ui_Form):
     def __init__(self):
         super(JamboBrowserHistory, self).__init__()
         self.setupUi(self)
+
+        # Window
+        self.setWindowIcon(QIcon(os.path.join(os.getcwd(), '../images/jb_icon')))
+        self.setWindowTitle('Histórico - Jambo')
 
         self.removeHistory.setStyleSheet(button_generic())
 

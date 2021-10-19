@@ -1,9 +1,9 @@
+import os
 import sys
-
-from PySide2.QtCore import QSize, QUrl, Qt, QThread, Signal
+from PySide2.QtCore import QUrl, QThread, Signal
+from PySide2.QtGui import QIcon
 from PySide2.QtWebEngineWidgets import QWebEnginePage
-from PySide2.QtWidgets import QApplication, QMainWindow, QPushButton
-
+from PySide2.QtWidgets import QApplication, QMainWindow
 from aux_classes_gui.mini_browser_gui import Ui_MainWindow
 from helpers.helper_buttons import *
 from main.jambo_browser_history import JamboBrowserHistory
@@ -27,6 +27,10 @@ class JamboBrowser(QMainWindow, Ui_MainWindow):
         super(JamboBrowser, self).__init__()
         self.setupUi(self)
 
+        # Window
+        self.setWindowIcon(QIcon(os.path.join(os.getcwd(), '../images/jb_icon')))
+
+
         # History page
         self.history = JamboBrowserHistory()
 
@@ -48,10 +52,10 @@ class JamboBrowser(QMainWindow, Ui_MainWindow):
         self.historyButton.setText('H')
 
         # Size
-        self.backButton.setMinimumSize(25, 25)
-        self.fowardButton.setMinimumSize(25, 25)
-        self.refreshButton.setMinimumSize(25, 25)
-        self.historyButton.setMinimumSize(25, 25)
+        self.backButton.setMinimumSize(30, 30)
+        self.fowardButton.setMinimumSize(30, 30)
+        self.refreshButton.setMinimumSize(30, 30)
+        self.historyButton.setMinimumSize(30, 30)
 
         # Actions
         self.refreshButton.clicked.connect(self.reload)
@@ -69,6 +73,19 @@ class JamboBrowser(QMainWindow, Ui_MainWindow):
         # Thread
         self.thread = None
         self.history = JamboBrowserHistory()
+
+        # Icons
+        self.backButton.setText('')
+        self.backButton.setIcon(QIcon(os.path.join(os.getcwd(), '../images/arrow_left.png')))
+        # -
+        self.fowardButton.setText('')
+        self.fowardButton.setIcon(QIcon(os.path.join(os.getcwd(), '../images/arrow_right.png')))
+        # -
+        self.refreshButton.setText('')
+        self.refreshButton.setIcon(QIcon(os.path.join(os.getcwd(), '../images/reload.png')))
+        # -
+        self.historyButton.setText('')
+        self.historyButton.setIcon((QIcon(os.path.join(os.getcwd(), '../images/search_history.png'))))
 
     def reload(self):
         self.webEngineView.reload()
@@ -106,6 +123,7 @@ class JamboBrowser(QMainWindow, Ui_MainWindow):
     def show_history(self):
         self.history.show()
         self.thread.progress.disconnect()
+
 
 
 if __name__ == '__main__':
