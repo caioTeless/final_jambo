@@ -34,6 +34,23 @@ class Ui_formResult(object):
 
         self.verticalLayout.addWidget(self.listTitle)
 
+        self.contentPreview = QTextEdit(formResult)
+        self.contentPreview.setObjectName(u"contentPreview")
+        self.contentPreview.setMaximumSize(QSize(16777215, 120))
+        self.contentPreview.setStyleSheet(u"font: 10pt \"Arial\";\n"
+"padding: 10px;\n"
+"border-radius: 4px;\n"
+"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+"\n"
+"QScrollBar::vertical{\n"
+"	\n"
+"	background-color: rgb(0, 85, 0);\n"
+"	width: 15px;\n"
+"}")
+
+        self.verticalLayout.addWidget(self.contentPreview)
+
         self.textResults = QTextEdit(formResult)
         self.textResults.setObjectName(u"textResults")
         self.textResults.setStyleSheet(u"font: 10pt \"Arial\";\n"

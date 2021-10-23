@@ -6,6 +6,7 @@ from PySide2.QtWidgets import QWidget, QApplication
 from PySide2.QtCore import Qt
 from aux_classes_gui.list_result import Ui_formResult
 from helpers.helper_buttons import *
+from main.jambo_browser import JamboBrowser
 
 
 class JamboResults(QWidget, Ui_formResult):
@@ -33,10 +34,17 @@ class JamboResults(QWidget, Ui_formResult):
         # ACtions
         self.clearListButton.clicked.connect(self.clear_results)
 
+        # Browser
+        self.browser = JamboBrowser()
+
     # Always get a new data
     def insert_data_display(self):
-        with open('teste.txt', 'r+') as arquive:
-            self.textResults.setText(str(arquive.read().replace('\n', '')))
+        arquive = open('teste.txt', 'r')
+        self.textResults.setText(str(arquive.read().replace('\n', '')))
+        preview = open('../crawler/crawler_general.txt', 'r')
+        self.contentPreview.setText(str(preview.read()))
+        arquive.close()
+        preview.close()
 
     # Write save data
     def get_new_text(self):
