@@ -1,10 +1,11 @@
 import os
 import sys
 
-from PySide2.QtCore import QThread, Signal, QObject, SIGNAL
-from PySide2.QtGui import QIcon
+from PySide2.QtCore import QThread, Signal, QObject, SIGNAL, QSize
+from PySide2.QtGui import QIcon, QMovie
 from PySide2.QtWidgets import QWidget, QApplication
 from aux_classes_gui.first_window import Ui_JamboGui
+from crawler.crawler_content import CrawlerContent
 from helpers.helper_buttons import button_generic
 
 from jambo_browser import JamboBrowser
@@ -16,14 +17,19 @@ class Worker(QThread):
 
     progress = Signal(str)
 
-    def __init__(self):
+    def __init__(self, query='', tot_query=0):
         super(Worker, self).__init__()
+        self.query = query
+        self.tot_query = tot_query
 
     def run(self):
+        search = CrawlerContent(self.query, self.tot_query)
+        search.get_page()
         self.progress.emit(str)
 
 
 class JamboHome(QWidget, Ui_JamboGui):
+
     def __init__(self):
         super(JamboHome, self).__init__()
         self.setupUi(self)
@@ -43,6 +49,9 @@ class JamboHome(QWidget, Ui_JamboGui):
         self.results = JamboResults()
 
         # Icons
+        image = os.path.join(os.getcwd(), '../images/loader_search.gif')
+        self.movie = QMovie(image)
+        self.movie.setScaledSize(QSize(50, 50))
 
         # View controls
         self.searchInputButton.setDisabled(True)
@@ -53,6 +62,9 @@ class JamboHome(QWidget, Ui_JamboGui):
 
         # Threads
         self.thread = None
+
+        # Crawlers
+        self.crawler_content = CrawlerContent()
 
     def disable_button(self):
         if len(self.inputSearch.text()) > 0:
@@ -66,7 +78,19 @@ class JamboHome(QWidget, Ui_JamboGui):
     def show_sites(self):
         self.sites.show()
 
+    def load_animation(self):
+        self.thread = Worker(self.inputSearch.text(), self.selectTotalSites.value())
+        self.projectLoader.setMovie(self.movie)
+        self.movie.start()
+        self.thread.progress.connect(self.show_results)
+        self.thread.start()
+
     def show_results(self):
+        self.movie.stop()
+        self.projectLoader.clear()
+        self.thread.progress.disconnect()
+        self.thread = None
+        self.results.insert_data_display()
         self.results.show()
 
     def start_operations(self):
@@ -74,7 +98,7 @@ class JamboHome(QWidget, Ui_JamboGui):
         self.openSites.clicked.connect(self.show_sites)
 
         # Not implemeted yet
-        self.searchInputButton.clicked.connect(self.show_results)
+        self.searchInputButton.clicked.connect(self.load_animation)
 
 
 if __name__ == '__main__':
