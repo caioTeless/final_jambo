@@ -1,8 +1,7 @@
 import os.path
-import sys
 
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QWidget, QApplication
+from PySide2.QtWidgets import QWidget
 from aux_classes_gui.history_browser import Ui_Form
 from helpers.helper_buttons import button_generic
 
@@ -38,11 +37,4 @@ class JamboBrowserHistory(QWidget, Ui_Form):
         items.write('')
         items.close()
         self.listHistory.clear()
-
-
-if __name__ == '__main__':
-    app = QApplication([])
-    history = JamboBrowserHistory()
-    history.show()
-    sys.exit(app.exec_())
 

@@ -52,8 +52,6 @@ class JamboPDF:
         return p
 
     def return_par_title(self):
-        # title_value = self.title.split('/')
-        # p = Paragraph(title_value[-1:][0], self.return_style_title())
         p = Paragraph(self.title_app, self.return_style_title())
         return p
 
@@ -64,6 +62,7 @@ class JamboPDF:
 
     def build_pdf(self):
         self.doc.build(self.return_generator_story())
+
 
 
 

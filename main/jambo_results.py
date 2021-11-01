@@ -1,12 +1,13 @@
 import os
 import sys
 
-from PySide2.QtGui import QTextBlockFormat, QIcon
-from PySide2.QtWidgets import QWidget, QApplication
+from PySide2.QtGui import QIcon
+from PySide2.QtWidgets import QWidget, QFileDialog, QApplication
 from PySide2.QtCore import Qt
 from aux_classes_gui.list_result import Ui_formResult
 from helpers.helper_buttons import *
 from main.jambo_browser import JamboBrowser
+from model import jambo_pdf
 
 
 class JamboResults(QWidget, Ui_formResult):
@@ -24,42 +25,33 @@ class JamboResults(QWidget, Ui_formResult):
         self.saveListButton.setStyleSheet(button_generic())
         self.clearListButton.setStyleSheet(button_generic())
 
-        # Methods
-        self.insert_data_display()
-
         self.textResults.setAlignment(Qt.AlignJustify)
-
-        self.save_new_arquive()
 
         # ACtions
         self.clearListButton.clicked.connect(self.clear_results)
+        self.saveListButton.clicked.connect(self.save_content)
 
         # Browser
         self.browser = JamboBrowser()
 
+    def get_wiki_sites(self):
+        for sites in self.wiki_content:
+            return sites
+
     # Always get a new data
     def insert_data_display(self):
-        arquive = open('data.txt', 'r', encoding='utf-8')
-        self.textResults.setText(str(arquive.read().replace('\n', '')))
-        preview = open('../crawler/crawler_general.txt', 'r')
-        self.contentPreview.setText(str(preview.read()))
-        if self.isVisible():
-            arquive.close()
-            preview.close()
-        arquive.seek(0)
-        preview.seek(0)
-
-    # Write save data
-    def get_new_text(self):
-        self.textResults.setSpacing(10)
-        with open('data.txt', 'w+', encoding='utf-8') as arquive:
-            arquive.write(self.textResults.toPlainText())
-
-    def save_new_arquive(self):
-        self.saveListButton.clicked.connect(self.get_new_text)
+        with open('data.txt', 'r', encoding='utf-8') as arquive:
+            words = arquive.read().split(' ')
+            size = round(len(words) / 0.9)
+            arquive.seek(0)
+            self.textResults.setText(arquive.read()[:size] + '[...]')
+            arquive.seek(0)
+        with open('crawler_general.txt', 'r', encoding='utf-8') as preview:
+            self.contentPreview.setText(str(preview.read()))
+            preview.seek(0)
 
     def clear_results(self):
-        items = open('data.txt', 'w+', encoding='utf-8')
+        items = open('crawler_general.txt', 'w+', encoding='utf-8')
         items_tips = open('data.txt', 'w+', encoding='utf-8')
         items_tips.write('')
         items.write('')
@@ -68,10 +60,20 @@ class JamboResults(QWidget, Ui_formResult):
         self.textResults.clear()
         self.contentPreview.clear()
 
+    def save_content(self):
+        if len(self.textResults.toPlainText()) > 0:
+            options = QFileDialog.Options()
+            # options |= QFileDialog.DontUseNativeDialog
+            file_name, _ = QFileDialog.getSaveFileName(self, 'Salvar - Jambo', '', '*.pdf', options=options)
+            if file_name:
+                with open('data.txt', 'w+', encoding='utf-8') as arquive:
+                    arquive.write(self.textResults.toPlainText())
+                jb = jambo_pdf.JamboPDF('data.txt', file_name)
+                jb.build_pdf()
+
 
 if __name__ == '__main__':
     app = QApplication([])
-    ui = JamboResults()
-    ui.show()
+    home = JamboResults()
+    home.show()
     sys.exit(app.exec_())
-

@@ -5,7 +5,7 @@ class WikiContent:
         self.content = content
 
     def return_content(self):
-        return self.content
+        return self.content.replace('Páginas para editores conectados saiba mais', '')
 
     def return_urls(self):
         return self.url

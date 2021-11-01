@@ -1,13 +1,12 @@
 import os
 import sys
 
-from PySide2.QtCore import QThread, Signal, QObject, SIGNAL, QSize
+from PySide2.QtCore import QThread, Signal, QSize
 from PySide2.QtGui import QIcon, QMovie
 from PySide2.QtWidgets import QWidget, QApplication
 from aux_classes_gui.first_window import Ui_JamboGui
 from crawler.crawler_content import CrawlerContent
 from helpers.helper_buttons import button_generic
-
 from jambo_browser import JamboBrowser
 from jambo_sites import JamboSites
 from jambo_results import JamboResults
@@ -24,6 +23,9 @@ class Worker(QThread):
 
     def run(self):
         search = CrawlerContent(self.query, self.tot_query)
+        # search_api = CrawlerGeneralContent()
+        # search_api.query = self.query
+        # search_api.get_results()
         search.get_page()
         self.progress.emit(str)
 
@@ -90,14 +92,21 @@ class JamboHome(QWidget, Ui_JamboGui):
         self.projectLoader.clear()
         self.thread.progress.disconnect()
         self.thread = None
+        with open('data.txt', 'r', encoding='utf-8') as file:
+            res = file.read()
+            if len(res) <= 0:
+                self.results.textResults.hide()
+                self.results.saveListButton.setDisabled(True)
+            else:
+                self.results.saveListButton.setDisabled(False)
+                self.results.textResults.show()
+            file.seek(0)
         self.results.insert_data_display()
         self.results.show()
 
     def start_operations(self):
         self.openMiniBrowser.clicked.connect(self.show_browser)
         self.openSites.clicked.connect(self.show_sites)
-
-        # Not implemeted yet
         self.searchInputButton.clicked.connect(self.load_animation)
 
 

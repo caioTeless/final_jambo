@@ -36,7 +36,7 @@ class Ui_formResult(object):
 
         self.contentPreview = QTextEdit(formResult)
         self.contentPreview.setObjectName(u"contentPreview")
-        self.contentPreview.setMaximumSize(QSize(16777215, 120))
+        self.contentPreview.setMinimumSize(QSize(16777215, 120))
         self.contentPreview.setStyleSheet(u"font: 10pt \"Arial\";\n"
 "padding: 10px;\n"
 "border-radius: 4px;\n"
@@ -71,6 +71,9 @@ class Ui_formResult(object):
         self.textResults.setLineWrapMode(QTextEdit.WidgetWidth)
         self.textResults.setLineWrapColumnOrWidth(0)
         self.textResults.setCursorWidth(2)
+        # self.textResults.setMaximumSize(QSize(16777215, 16777215)) # Changed
+        self.textResults.setMinimumSize(QSize(16777215, 350))
+
 
         self.verticalLayout.addWidget(self.textResults)
 

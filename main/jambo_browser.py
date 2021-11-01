@@ -30,7 +30,6 @@ class JamboBrowser(QMainWindow, Ui_MainWindow):
         # Window
         self.setWindowIcon(QIcon(os.path.join(os.getcwd(), '../images/jb_icon')))
 
-
         # History page
         self.history = JamboBrowserHistory()
 
@@ -123,12 +122,4 @@ class JamboBrowser(QMainWindow, Ui_MainWindow):
     def show_history(self):
         self.history.show()
         self.thread.progress.disconnect()
-
-
-
-if __name__ == '__main__':
-    app = QApplication([])
-    ui = JamboBrowser()
-    ui.show()
-    sys.exit(app.exec_())
 
