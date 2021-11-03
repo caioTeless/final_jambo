@@ -62,8 +62,8 @@ class JamboBrowser(QMainWindow, Ui_MainWindow):
         self.backButton.clicked.connect(self.back)
         self.fowardButton.clicked.connect(self.forward)
 
-        self.webEngineView.page().urlChanged.connect(self.load_finished)
         self.webEngineView.page().urlChanged.connect(self.url_changed)
+        self.webEngineView.page().urlChanged.connect(self.load_finished)
 
         self.webEngineView.page().titleChanged.connect(self.setWindowTitle)
 
@@ -114,8 +114,9 @@ class JamboBrowser(QMainWindow, Ui_MainWindow):
         self.thread = Worker()
         self.lineEdit.setText(url.toString())
         with open('history_data.txt', 'a+') as arquive:
-            arquive.write(self.lineEdit.text())
-            arquive.write('\n')
+            if self.isVisible():
+                arquive.write(self.lineEdit.text())
+                arquive.write('\n')
         self.thread.progress.connect(self.history.read_history)
         self.thread.start()
 

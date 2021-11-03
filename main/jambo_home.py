@@ -1,10 +1,11 @@
 import os
 import sys
 
-from PySide2.QtCore import QThread, Signal, QSize
-from PySide2.QtGui import QIcon, QMovie
-from PySide2.QtWidgets import QWidget, QApplication
+from PySide2.QtCore import QThread, Signal, QSize, QTimer
+from PySide2.QtGui import QIcon, QMovie, QPixmap
+from PySide2.QtWidgets import QWidget, QApplication, QSplashScreen
 from aux_classes_gui.first_window import Ui_JamboGui
+from crawler.crawler import CrawlerGeneralContent
 from crawler.crawler_content import CrawlerContent
 from helpers.helper_buttons import button_generic
 from jambo_browser import JamboBrowser
@@ -16,16 +17,15 @@ class Worker(QThread):
 
     progress = Signal(str)
 
-    def __init__(self, query='', tot_query=0):
+    def __init__(self, query=''):
         super(Worker, self).__init__()
         self.query = query
-        self.tot_query = tot_query
 
     def run(self):
-        search = CrawlerContent(self.query, self.tot_query)
-        # search_api = CrawlerGeneralContent()
-        # search_api.query = self.query
-        # search_api.get_results()
+        search = CrawlerContent(self.query)
+        search_api = CrawlerGeneralContent()
+        search_api.query = self.query
+        search_api.get_results()
         search.get_page()
         self.progress.emit(str)
 
@@ -59,9 +59,6 @@ class JamboHome(QWidget, Ui_JamboGui):
         self.searchInputButton.setDisabled(True)
         self.inputSearch.textChanged.connect(self.disable_button)
 
-        # Operations
-        self.start_operations()
-
         # Threads
         self.thread = None
 
@@ -81,7 +78,7 @@ class JamboHome(QWidget, Ui_JamboGui):
         self.sites.show()
 
     def load_animation(self):
-        self.thread = Worker(self.inputSearch.text(), self.selectTotalSites.value())
+        self.thread = Worker(self.inputSearch.text())
         self.projectLoader.setMovie(self.movie)
         self.movie.start()
         self.thread.progress.connect(self.show_results)
@@ -113,6 +110,11 @@ class JamboHome(QWidget, Ui_JamboGui):
 if __name__ == '__main__':
     app = QApplication([])
     home = JamboHome()
-    home.show()
+    home.start_operations()
+    pixmap = QPixmap(os.path.join(os.getcwd(), '../images/SplashScreen2_Jambo.png'))
+    splash = QSplashScreen()
+    splash.setPixmap(pixmap)
+    QTimer.singleShot(4999, splash.close)
+    QTimer.singleShot(5000, home.show)
+    splash.show()
     sys.exit(app.exec_())
-

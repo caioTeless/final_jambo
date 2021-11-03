@@ -24,8 +24,8 @@ class JamboPDF:
         my_style_content = ParagraphStyle(
             'File',
             alignment=TA_JUSTIFY,
-            fontName='Courier',
-            fontSize=10,
+            fontName='Helvetica',
+            fontSize=12,
             spaceAfter=6,
             spaceBefore=6,
             leading=24,

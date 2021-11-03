@@ -54,20 +54,6 @@ class Ui_JamboGui(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.selectTotalSites = QSpinBox(self.frame)
-        self.selectTotalSites.setObjectName(u"selectTotalSites")
-        self.selectTotalSites.setMaximumSize(QSize(50, 16777215))
-        self.selectTotalSites.setStyleSheet(u"background-color: qlineargradient(spread:pad, x1:1, y1:0.074, x2:0, y2:0.966227, stop:0 rgba(0, 0, 0, 255), stop:0.9375 rgba(10, 29, 2, 255));\n"
-"border-radius: 20px;\n"
-"padding: 5px;\n"
-"font: 10pt \"Courier\";\n"
-"color: rgb(255, 255, 255);")
-        self.selectTotalSites.setButtonSymbols(QAbstractSpinBox.UpDownArrows)
-        self.selectTotalSites.setMinimum(1)
-        self.selectTotalSites.setMaximum(10)
-
-        self.horizontalLayout.addWidget(self.selectTotalSites)
-
         self.inputSearch = QLineEdit(self.frame)
         self.inputSearch.setObjectName(u"inputSearch")
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
@@ -75,8 +61,8 @@ class Ui_JamboGui(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.inputSearch.sizePolicy().hasHeightForWidth())
         self.inputSearch.setSizePolicy(sizePolicy2)
-        self.inputSearch.setMinimumSize(QSize(150, 32))
-        self.inputSearch.setMaximumSize(QSize(300, 32))
+        self.inputSearch.setMinimumSize(QSize(180, 32))
+        self.inputSearch.setMaximumSize(QSize(350, 32))
         self.inputSearch.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "font: 9pt \"Arial\";\n"
 "border-radius: 4px;\n"
@@ -169,7 +155,7 @@ class Ui_JamboGui(object):
     def retranslateUi(self, JamboGui):
         JamboGui.setWindowTitle(QCoreApplication.translate("JamboGui", u"JamboGui", None))
         self.projectLoader.setText("")
-        self.inputSearch.setPlaceholderText(QCoreApplication.translate("JamboGui", u"Insira algum conte\u00fado", None))
+        self.inputSearch.setPlaceholderText(QCoreApplication.translate("JamboGui", u"Insira algum dado", None))
         self.searchInputButton.setText(QCoreApplication.translate("JamboGui", u"Pesquisar", None))
         self.openSites.setText(QCoreApplication.translate("JamboGui", u"Sites", None))
         self.openMiniBrowser.setText(QCoreApplication.translate("JamboGui", u"Browser", None))

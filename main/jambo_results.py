@@ -71,9 +71,10 @@ class JamboResults(QWidget, Ui_formResult):
                 jb = jambo_pdf.JamboPDF('data.txt', file_name)
                 jb.build_pdf()
 
-
+"""
 if __name__ == '__main__':
     app = QApplication([])
     home = JamboResults()
     home.show()
     sys.exit(app.exec_())
+"""

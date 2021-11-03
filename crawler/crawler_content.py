@@ -10,9 +10,9 @@ from model import jambo_header
 class CrawlerContent:
     wiki_content = set()
 
-    def __init__(self, query='', cont=0):
+    def __init__(self, query=''):
         self.query = query
-        self.cont = cont
+        self.cont = 10
         self.title = ''
 
     def get_page(self):
@@ -32,11 +32,7 @@ class CrawlerContent:
                         format_data = re.sub("\[(.*?)\]", '', wiki.return_content())
                         new = format_data.replace('\t', '')
                         my_data.write(site + '\n\n')
-                        my_data.write(new.replace('\n', ''))  # Corrigir
+                        my_data.write(new.replace('\n', ''))
             except Exception:
                 return
 
-
-# cw = CrawlerContent('Segunda guerra', 4)
-
-# cw.get_page()

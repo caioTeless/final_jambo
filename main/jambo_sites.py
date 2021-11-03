@@ -129,3 +129,11 @@ class JamboSites(QWidget, Ui_resultSites):
         item = self.resultSitesList.currentItem().text()
         self.browser.show()
         self.browser.lineEdit.setText(item)
+
+"""
+if __name__ == '__main__':
+    app = QApplication([])
+    home = JamboSites()
+    home.show()
+    sys.exit(app.exec_())
+"""

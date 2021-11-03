@@ -27,14 +27,14 @@ def button_browser():
 ####################################################################################
 def input_generic():
     background = "background-color: rgb(255, 255, 255);\n" \
-                 "font: 12pt \"Courier\";\n" \
+                 "font: 10pt \"Arial\";\n" \
                  "border-radius: 6px;\npadding: 6px;"
     return background
 
 
 def input_browser():
     background = "background-color: rgb(255, 255, 255);\n" \
-                 "font: 9pt \"Courier\";\n" \
+                 "font: 10pt \"Arial\";\n" \
                  "border-radius: 6px;\npadding: 6px;"
     return background
 
