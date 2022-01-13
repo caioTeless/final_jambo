@@ -8,6 +8,9 @@ dados da web em formato de texto e retorna para o usuário de maneira legível.
 Para realização das atividades foram utilizados alguns recursos como:
 
 A API SerpApi, no qual utiliza recursos e mecanismos do google search entre outros;
+
 A IDE QtCreator para criação das interfaces gráficas em python em paralelo com a biblioteca PySide2;
+
 A biblioteca BeautifulSoup4 que contém recursos que tornam prático a maneira de extrair e interpretar dados da web;
+
 A biblioteca reportlab que contém recursos e possibilita a criação intuitiva de arquivos em pdf.
